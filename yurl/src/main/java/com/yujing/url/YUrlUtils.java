@@ -51,19 +51,4 @@ public class YUrlUtils {
         bs.flush();
         return bs.toByteArray();
     }
-
-    /**
-     * 取出超类的泛型的具体类型
-     * @param obj 实例化的对象
-     * @return Type
-     */
-    public synchronized static Type getSuperclassGenericType(Object obj) {
-        Type type=null;
-        Type genericType = obj.getClass().getGenericSuperclass();
-        if(genericType instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) genericType;
-            type=parameterizedType.getActualTypeArguments()[0];
-        }
-        return type;
-    }
 }

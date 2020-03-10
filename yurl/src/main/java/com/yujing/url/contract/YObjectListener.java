@@ -1,4 +1,4 @@
-package com.yujing.url;
+package com.yujing.url.contract;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

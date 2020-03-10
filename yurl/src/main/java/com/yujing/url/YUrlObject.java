@@ -1,6 +1,7 @@
 package com.yujing.url;
 
 import com.google.gson.Gson;
+import com.yujing.url.contract.YObjectListener;
 import com.yujing.url.contract.YUrlListener;
 
 import java.util.Map;
