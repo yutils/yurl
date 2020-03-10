@@ -177,7 +177,6 @@ public class YVersionUpdate {
         YShow.setMessageOther("请稍候...");
         YShow.setCancel(forceUpdate);
         String saveApkName = DownUrl.substring(DownUrl.lastIndexOf("/") + 1);
-//        final String path = Environment.getExternalStorageDirectory() + "/download/";
         File file = new File(YPath.getFilePath(activity) + "/download/" + saveApkName);
         //下载
         YUrlAndroid.create().downloadFile(DownUrl, file, new YUrlDownloadFileListener() {
