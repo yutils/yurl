@@ -8,6 +8,7 @@ import android.os.Build;
 
 import com.yujing.url.YUrlAndroid;
 import com.yujing.url.contract.YUrlDownloadFileListener;
+import com.yujing.utils.YNoticeDownload;
 import com.yujing.utils.YPath;
 import com.yujing.utils.YShow;
 import com.yujing.utils.YUtils;
