@@ -226,10 +226,6 @@ public class YVersionUpdate {
      * 下载APK
      */
     private void notifiDownApkFile() {
-//        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            YToast.show(activity, "请打开文件写入权限！");
-//            return;
-//        }
         YShow.show(activity, "正在下载");
         YShow.setMessageOther("请稍候...");
         //通知栏下载
