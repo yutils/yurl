@@ -4,6 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * 线程池管理类
+ *
  * @author yujing 2019年5月31日15:53:51
  */
 public class YUrlThreadPool {
@@ -20,6 +21,7 @@ public class YUrlThreadPool {
 
     /**
      * 把一个线程扔进线程池
+     *
      * @param thread 要执行的线程
      */
     public synchronized static void add(Thread thread) {
@@ -36,7 +38,8 @@ public class YUrlThreadPool {
     }
 
     /**
-     *  获取当前有多少线程
+     * 获取当前有多少线程
+     *
      * @return 线程数量
      */
     public static int getPoolSize() {

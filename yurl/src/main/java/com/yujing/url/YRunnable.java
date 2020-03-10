@@ -7,9 +7,11 @@ import com.yujing.url.contract.YRun;
  */
 public class YRunnable implements Runnable {
     private final YRun yRun;
+
     YRunnable(YRun yRun) {
         this.yRun = yRun;
     }
+
     @Override
     public void run() {
         if (yRun != null) {

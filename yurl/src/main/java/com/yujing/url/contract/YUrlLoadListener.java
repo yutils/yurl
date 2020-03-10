@@ -1,7 +1,7 @@
 package com.yujing.url.contract;
 
 /**
- * 文件加载监听
+ * 文件下载监听
  *
  * @author yujing 2019年5月31日15:29:13
  */
