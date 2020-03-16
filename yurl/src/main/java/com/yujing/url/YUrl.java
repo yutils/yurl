@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 网络请求类
  *
- * @author yujing 2019年5月31日15:52:55
+ * @author yujing 2020年3月16日13:50:08
  */
 public class YUrl {
     private static final String TAG = "YUrl";

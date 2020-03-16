@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 网络请求类
  *
- * @author yujing 2019年6月14日10:49:34
+ * @author yujing 2020年3月16日13:50:01
  */
 public class YUrlAndroid extends YUrl {
     private static final String TAG = "YUrlAndroid";
