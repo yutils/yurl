@@ -3,6 +3,8 @@ package com.yujing.url;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.yujing.url.contract.YObjectListener;
 import com.yujing.url.contract.YUrlDownloadFileListener;
 import com.yujing.url.contract.YUrlListener;
 import com.yujing.url.contract.YUrlLoadListener;
@@ -81,6 +83,35 @@ public class YUrlAndroid extends YUrl {
     }
 
     /**
+     * get请求
+     * @param requestUrl url
+     * @param listener   监听
+     * @param <T>        类型
+     */
+    public <T> void get(String requestUrl, final YObjectListener<T> listener) {
+        super.get(requestUrl, new YUrlListener() {
+            @Override
+            public void success(byte[] bytes, String value) {
+                System.out.println("对象转换类型：" + listener.getType());
+                if (String.class.equals(listener.getType())) {
+                    handler.post(new YRunnable(() -> listener.success(bytes, (T) value)));
+                } else if ("byte[]".equals(listener.getType().toString())) {
+                    handler.post(new YRunnable(() -> listener.success(bytes, (T) bytes)));
+                } else {
+                    Gson gson = new Gson();
+                    T object = gson.fromJson(value, listener.getType());
+                    handler.post(new YRunnable(() -> listener.success(bytes, object)));
+                }
+            }
+
+            @Override
+            public void fail(String value) {
+                handler.post(new YRunnable(() -> listener.fail(value)));
+            }
+        });
+    }
+
+    /**
      * post请求
      *
      * @param requestUrl   url
@@ -93,6 +124,52 @@ public class YUrlAndroid extends YUrl {
             @Override
             public void success(byte[] bytes, String value) {
                 handler.post(new YRunnable(() -> listener.success(bytes, value)));
+            }
+
+            @Override
+            public void fail(String value) {
+                handler.post(new YRunnable(() -> listener.fail(value)));
+            }
+        });
+    }
+
+    /**
+     * post请求
+     *
+     * @param requestUrl url
+     * @param paramsMap  key，value
+     * @param listener   监听
+     * @param <T>        类型
+     */
+    public <T> void post(String requestUrl, Map<String, Object> paramsMap, YObjectListener<T> listener) {
+        post(requestUrl, YUrlUtils.mapToParams(paramsMap).toString().getBytes(), listener);
+    }
+
+    /**
+     * post请求
+     *
+     * @param requestUrl url
+     * @param params     文本
+     * @param listener   监听
+     * @param <T>        类型
+     */
+    public <T> void post(final String requestUrl, String params, YObjectListener<T> listener) {
+        post(requestUrl, params.getBytes(), listener);
+    }
+
+    /**
+     * post请求
+     *
+     * @param requestUrl   url
+     * @param requestBytes bytes
+     * @param listener     监听
+     * @param <T>          类型
+     */
+    public <T> void post(String requestUrl, byte[] requestBytes, final YObjectListener<T> listener) {
+        super.post(requestUrl, requestBytes, new YObjectListener<T>() {
+            @Override
+            public void success(byte[] bytes, Object value) {
+                handler.post(new YRunnable(() -> listener.success(bytes, (T) value)));
             }
 
             @Override
