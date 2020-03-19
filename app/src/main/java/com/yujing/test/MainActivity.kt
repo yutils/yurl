@@ -54,8 +54,7 @@ class MainActivity : BaseActivity() {
 //            }
 //        })
 
-        YUrlAndroid.create()
-            .post(url, Gson().toJson(map), object : YObjectListener<YResponse<FarmersInfo>>() {
+        YUrlAndroid.create().post(url, Gson().toJson(map), object : YObjectListener<YResponse<FarmersInfo>>() {
                 override fun success(bytes: ByteArray?, value: YResponse<FarmersInfo>?) {
                     runOnUiThread(Runnable {
                         YShow.finish()
