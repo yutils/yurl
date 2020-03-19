@@ -1,13 +1,13 @@
 # yurl网络请求，支持java，kotlin
-1.支持get，post请求
-2.支持文件上传下载，回调进度条
-3.post请求可为字符串，map，byte[]
-4.可以直接返回字符串
-5.直接返回对象
-6.异常回调原因
-7.支持https,设置ssl文件
-8.简单好用
- 采用java8.0，安卓10.0，API29，androidx。
+> * 1.支持get，post请求
+> * 2.支持文件上传下载，回调进度条
+> * 3.post请求可为字符串，map，byte[]
+> * 4.可以直接返回字符串
+> * 5.直接返回对象
+> * 6.异常回调原因
+> * 7.支持https,设置ssl文件
+> * 8.简单好用
+采用java8.0，安卓10.0，API29，androidx。
 
 
 ##当前最新版：————>[![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9qaXRwYWNrLmlvL3YveXV0aWxzL3l1cmwuc3Zn?x-oss-process=image/format,png)](https://jitpack.io/#yutils/yurl)
