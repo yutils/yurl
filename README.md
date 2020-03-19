@@ -71,7 +71,7 @@ YUrlAndroid.create().post(url, hashMap, new YUrlListener() {
 
 <font color=#0099ff size=4 >kotlin</font>
 ```kotlin
- val map: MutableMap<String, Any> = HashMap()
+val map: MutableMap<String, Any> = HashMap()
 map["Command"] = 1
 map["MsgId"] = 0
 map["DeviceNo"] = "HJWV1X7SEL"
