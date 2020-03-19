@@ -125,14 +125,22 @@ public class YUrl {
             @Override
             public void success(byte[] bytes, String value) {
                 System.out.println("对象转换类型：" + listener.getType());
-                if (String.class.equals(listener.getType())) {
-                    listener.success(bytes, (T) value);
-                } else if ("byte[]".equals(listener.getType().toString())) {
-                    listener.success(bytes, (T) bytes);
-                } else {
-                    Gson gson = new Gson();
-                    T object = gson.fromJson(value, listener.getType());
-                    listener.success(bytes, object);
+                try {
+                    if (String.class.equals(listener.getType())) {
+                        listener.success(bytes, (T) value);
+                    } else if ("byte[]".equals(listener.getType().toString())) {
+                        listener.success(bytes, (T) bytes);
+                    } else {
+                        Gson gson = new Gson();
+                        T object = gson.fromJson(value, listener.getType());
+                        listener.success(bytes, object);
+                    }
+                } catch (java.lang.ClassCastException e) {
+                    listener.fail("对象转换失败");
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    listener.fail("处理异常");
+                    e.printStackTrace();
                 }
             }
 
@@ -230,14 +238,22 @@ public class YUrl {
             @Override
             public void success(byte[] bytes, String value) {
                 System.out.println("对象转换类型：" + listener.getType());
-                if (String.class.equals(listener.getType())) {
-                    listener.success(bytes, (T) value);
-                } else if ("byte[]".equals(listener.getType().toString())) {
-                    listener.success(bytes, (T) bytes);
-                } else {
-                    Gson gson = new Gson();
-                    T object = gson.fromJson(value, listener.getType());
-                    listener.success(bytes, object);
+                try {
+                    if (String.class.equals(listener.getType())) {
+                        listener.success(bytes, (T) value);
+                    } else if ("byte[]".equals(listener.getType().toString())) {
+                        listener.success(bytes, (T) bytes);
+                    } else {
+                        Gson gson = new Gson();
+                        T object = gson.fromJson(value, listener.getType());
+                        listener.success(bytes, object);
+                    }
+                } catch (java.lang.ClassCastException e) {
+                    listener.fail("对象转换失败");
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    listener.fail("处理异常");
+                    e.printStackTrace();
                 }
             }
 

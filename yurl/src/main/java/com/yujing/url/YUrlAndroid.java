@@ -72,7 +72,14 @@ public class YUrlAndroid extends YUrl {
         super.get(requestUrl, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                handler.post(new YRunnable(() -> listener.success(bytes, value)));
+                handler.post(new YRunnable(() -> {
+                    try {
+                        listener.success(bytes, value);
+                    } catch (Exception e) {
+                        listener.fail("处理异常");
+                        e.printStackTrace();
+                    }
+                }));
             }
 
             @Override
@@ -84,6 +91,7 @@ public class YUrlAndroid extends YUrl {
 
     /**
      * get请求
+     *
      * @param requestUrl url
      * @param listener   监听
      * @param <T>        类型
@@ -93,15 +101,25 @@ public class YUrlAndroid extends YUrl {
             @Override
             public void success(byte[] bytes, String value) {
                 System.out.println("对象转换类型：" + listener.getType());
-                if (String.class.equals(listener.getType())) {
-                    handler.post(new YRunnable(() -> listener.success(bytes, (T) value)));
-                } else if ("byte[]".equals(listener.getType().toString())) {
-                    handler.post(new YRunnable(() -> listener.success(bytes, (T) bytes)));
-                } else {
-                    Gson gson = new Gson();
-                    T object = gson.fromJson(value, listener.getType());
-                    handler.post(new YRunnable(() -> listener.success(bytes, object)));
-                }
+                handler.post(new YRunnable(() -> {
+                    try {
+                        if (String.class.equals(listener.getType())) {
+                            listener.success(bytes, (T) value);
+                        } else if ("byte[]".equals(listener.getType().toString())) {
+                            listener.success(bytes, (T) bytes);
+                        } else {
+                            Gson gson = new Gson();
+                            T object = gson.fromJson(value, listener.getType());
+                            listener.success(bytes, object);
+                        }
+                    } catch (java.lang.ClassCastException e) {
+                        listener.fail("对象转换失败");
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        listener.fail("处理异常");
+                        e.printStackTrace();
+                    }
+                }));
             }
 
             @Override
@@ -123,7 +141,14 @@ public class YUrlAndroid extends YUrl {
         super.post(requestUrl, requestBytes, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                handler.post(new YRunnable(() -> listener.success(bytes, value)));
+                handler.post(new YRunnable(() -> {
+                    try {
+                        listener.success(bytes, value);
+                    } catch (Exception e) {
+                        listener.fail("处理异常");
+                        e.printStackTrace();
+                    }
+                }));
             }
 
             @Override
@@ -166,10 +191,29 @@ public class YUrlAndroid extends YUrl {
      * @param <T>          类型
      */
     public <T> void post(String requestUrl, byte[] requestBytes, final YObjectListener<T> listener) {
-        super.post(requestUrl, requestBytes, new YObjectListener<T>() {
+        super.post(requestUrl, requestBytes, new YUrlListener() {
             @Override
-            public void success(byte[] bytes, Object value) {
-                handler.post(new YRunnable(() -> listener.success(bytes, (T) value)));
+            public void success(byte[] bytes, String value) {
+                System.out.println("对象转换类型：" + listener.getType());
+                handler.post(new YRunnable(() -> {
+                    try {
+                        if (String.class.equals(listener.getType())) {
+                            listener.success(bytes, (T) value);
+                        } else if ("byte[]".equals(listener.getType().toString())) {
+                            listener.success(bytes, (T) bytes);
+                        } else {
+                            Gson gson = new Gson();
+                            T object = gson.fromJson(value, listener.getType());
+                            listener.success(bytes, object);
+                        }
+                    } catch (java.lang.ClassCastException e) {
+                        listener.fail("对象转换失败");
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        listener.fail("处理异常");
+                        e.printStackTrace();
+                    }
+                }));
             }
 
             @Override
