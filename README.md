@@ -10,7 +10,7 @@
 采用java8.0，安卓10.0，API29，androidx。
 
 
-##当前最新版：————>[![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9qaXRwYWNrLmlvL3YveXV0aWxzL3l1cmwuc3Zn?x-oss-process=image/format,png)](https://jitpack.io/#yutils/yurl)
+##当前最新版：————>[![](https://jitpack.io/v/yutils/yurl.svg)](https://jitpack.io/#yutils/yurl)
 
 ## Gradle 引用
 
@@ -24,7 +24,7 @@ allprojects {
 }
 ```
 
-2. 子module添加依赖，当前最新版：————> [![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9qaXRwYWNrLmlvL3YveXV0aWxzL3l1cmwuc3Zn?x-oss-process=image/format,png)](https://jitpack.io/#yutils/yurl)
+2. 子module添加依赖，当前最新版：————> [![](https://jitpack.io/v/yutils/yurl.svg)](https://jitpack.io/#yutils/yurl)
 
 ```
 dependencies {
