@@ -74,7 +74,7 @@ public class YUrlBase {
         // 判断请求是否成功
         int responseCode = urlConn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new Exception("请求失败，错误码：" + responseCode);
+            throw new Exception("错误码：" + responseCode);
         }
         byte[] bytes = YUrlUtils.inputStreamToBytes(urlConn.getInputStream());
         // 关闭连接
@@ -123,7 +123,7 @@ public class YUrlBase {
         // 判断请求是否成功
         int responseCode = urlConn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new Exception("请求失败，错误码：" + responseCode);
+            throw new Exception("错误码：" + responseCode);
         }
         byte[] bytes = YUrlUtils.inputStreamToBytes(urlConn.getInputStream());
         // 关闭连接
@@ -162,7 +162,7 @@ public class YUrlBase {
         // 判断请求是否成功
         int responseCode = urlConn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new Exception("请求失败，错误码：" + responseCode);
+            throw new Exception("错误码：" + responseCode);
         }
         int downloadSize = 0;
         int fileSize = urlConn.getContentLength(); // 获取不到文件大小时候fileSize=-1
@@ -208,7 +208,7 @@ public class YUrlBase {
         // 判断请求是否成功
         int responseCode = urlConn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new Exception("请求失败，错误码：" + responseCode);
+            throw new Exception("错误码：" + responseCode);
         }
         int downloadSize = 0;
         int fileSize = urlConn.getContentLength(); // 获取不到文件大小时候fileSize=-1

@@ -388,7 +388,7 @@ public class YUrl {
         } else if (e instanceof IOException) {
             error("连接服务器失败", listener);
         } else {
-            error("错误 " + e.getMessage(), listener);
+            error("请求失败 " + e.getMessage(), listener);
         }
     }
 

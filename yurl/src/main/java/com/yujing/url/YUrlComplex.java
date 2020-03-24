@@ -90,7 +90,7 @@ public class YUrlComplex {
         // 判断请求是否成功
         int responseCode = urlConn.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new Exception("请求失败，错误码：" + responseCode);
+            throw new Exception("错误码：" + responseCode);
         }
         byte[] bytes = YUrlUtils.inputStreamToBytes(urlConn.getInputStream());
         // 关闭连接
