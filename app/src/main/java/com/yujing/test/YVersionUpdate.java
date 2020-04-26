@@ -9,10 +9,10 @@ import android.os.Build;
 import com.yujing.url.YUrlAndroid;
 import com.yujing.url.contract.YUrlDownloadFileListener;
 import com.yujing.utils.YNoticeDownload;
+import com.yujing.utils.YNumber;
 import com.yujing.utils.YPath;
 import com.yujing.utils.YShow;
 import com.yujing.utils.YUtils;
-import com.yujing.utils.Ynumber;
 
 import java.io.File;
 
@@ -191,7 +191,7 @@ public class YVersionUpdate {
                 }
                 String success;
                 if (downloadSize > 1048576) {
-                    success = "已下载:" + Ynumber.showNumber(downloadSize / 1048576d, 1) + "MB";
+                    success = "已下载:" + YNumber.showNumber(downloadSize / 1048576d, 1) + "MB";
                 } else {
                     success = "已下载:" + downloadSize / 1024 + "KB";
                 }
@@ -259,7 +259,7 @@ public class YVersionUpdate {
                 if (progress != 100) {
                     String success;
                     if (downloaded > 1048576) {
-                        success = "已下载:" + Ynumber.showNumber(downloaded / 1048576d, 1) + "MB";
+                        success = "已下载:" + YNumber.showNumber(downloaded / 1048576d, 1) + "MB";
                     } else {
                         success = "已下载:" + downloaded / 1024 + "KB";
                     }
