@@ -101,7 +101,7 @@ public class YUrl {
                 byte[] bytes = yUrlBase.get(requestUrl);
                 String result = new String(bytes);
                 if (showLog)
-                    System.out.println("请求地址↓：\nGet--->" + requestUrl + "\n请求结果：" + result);
+                    println("请求地址↓：\nGet--->" + requestUrl + "\n请求结果：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -124,7 +124,7 @@ public class YUrl {
         get(requestUrl, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                System.out.println("对象转换类型：" + listener.getType());
+                println("对象转换类型：" + listener.getType());
                 try {
                     if (String.class.equals(listener.getType())) {
                         listener.success(bytes, (T) value);
@@ -190,7 +190,7 @@ public class YUrl {
                 byte[] bytes = yUrlBase.post(requestUrl, requestBytes);
                 String result = new String(bytes);
                 if (showLog)
-                    System.out.println("请求地址↓：\nPost--->" + requestUrl + (requestBytes == null ? "" : ("\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
+                    println("请求地址↓：\nPost--->" + requestUrl + (requestBytes == null ? "" : ("\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -237,7 +237,7 @@ public class YUrl {
         post(requestUrl, requestBytes, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                System.out.println("对象转换类型：" + listener.getType());
+                println("对象转换类型：" + listener.getType());
                 try {
                     if (String.class.equals(listener.getType())) {
                         listener.success(bytes, (T) value);
@@ -306,7 +306,7 @@ public class YUrl {
                 byte[] bytes = yUrlComplex.upload(requestUrl, requestBytes, fileMap);
                 String result = new String(bytes);
                 if (showLog)
-                    System.out.println("请求地址↓：\nupload--->" + requestUrl + (requestBytes == null ? "" : ("\n文件数：" + fileMap.size() + "\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
+                    println("请求地址↓：\nupload--->" + requestUrl + (requestBytes == null ? "" : ("\n文件数：" + fileMap.size() + "\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -333,7 +333,7 @@ public class YUrl {
                 YUrlProgressListener progressListener = listener::progress;
                 yUrlBase.downloadFile(requestUrl, file, progressListener);
                 if (showLog)
-                    System.out.println("文件下载↓：\nGet--->" + requestUrl + "\n保存路径：" + file.getPath());
+                    println("文件下载↓：\nGet--->" + requestUrl + "\n保存路径：" + file.getPath());
                 listener.success(file);
             } catch (Exception e) {
                 exception(e, listener);
@@ -359,7 +359,7 @@ public class YUrl {
                 YUrlProgressListener progressListener = listener::progress;
                 byte[] bytes = yUrlBase.load(requestUrl, progressListener);
                 if (showLog)
-                    System.out.println("文件加载↓：\nGet--->" + requestUrl);
+                    println("文件加载↓：\nGet--->" + requestUrl);
                 listener.success(bytes);
             } catch (Exception e) {
                 exception(e, listener);
@@ -400,14 +400,28 @@ public class YUrl {
      */
     void error(String error, Object listener) {
         if (listener instanceof YUrlListener) {
-            System.out.println(TAG + error);
+            println(TAG + error);
             ((YUrlListener) listener).fail(error);
         } else if (listener instanceof YUrlLoadListener) {
-            System.out.println(TAG + error);
+            println(TAG + error);
             ((YUrlLoadListener) listener).fail(error);
         } else if (listener instanceof YUrlDownloadFileListener) {
-            System.out.println(TAG + error);
+            println(TAG + error);
             ((YUrlDownloadFileListener) listener).fail(error);
+        }
+    }
+
+    /**
+     * 打印日志。如果发现包含Log就用Log打印，否则就用println
+     *
+     * @param str 日志
+     */
+    void println(String str) {
+        try {
+            Class.forName("android.util.Log");
+            YLog.d("YUrl", str);
+        } catch (Exception e) {
+            System.out.println(str);
         }
     }
 }

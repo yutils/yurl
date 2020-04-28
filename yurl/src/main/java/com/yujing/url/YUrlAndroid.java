@@ -100,7 +100,7 @@ public class YUrlAndroid extends YUrl {
         super.get(requestUrl, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                System.out.println("对象转换类型：" + listener.getType());
+                println("对象转换类型：" + listener.getType());
                 handler.post(new YRunnable(() -> {
                     try {
                         if (String.class.equals(listener.getType())) {
@@ -194,7 +194,7 @@ public class YUrlAndroid extends YUrl {
         super.post(requestUrl, requestBytes, new YUrlListener() {
             @Override
             public void success(byte[] bytes, String value) {
-                System.out.println("对象转换类型：" + listener.getType());
+                println("对象转换类型：" + listener.getType());
                 handler.post(new YRunnable(() -> {
                     try {
                         if (String.class.equals(listener.getType())) {

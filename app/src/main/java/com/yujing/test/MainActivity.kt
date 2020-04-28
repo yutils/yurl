@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
         button1.text = "yUrl网络请求"
         button1.setOnClickListener { netUrl() }
 
-        button2.setOnClickListener { }
+        button2.setOnClickListener { net2() }
         button3.setOnClickListener { }
         button4.setOnClickListener { }
         button5.setOnClickListener { }
@@ -33,6 +33,21 @@ class MainActivity : BaseActivity() {
         button7.setOnClickListener { update() }
         button8.text = "文件下载"
         button8.setOnClickListener { downLoad() }
+    }
+    private fun net2() {
+        var url = "http://192.168.1.120:10007/api/SweepCode/JjdTwoDownload"
+//         url = "http://www.baidu.com"
+        var p =
+            "{\"DeviceNo\":\"868403023178079\",\"BatchNum\":\"54511002\",\"Command\":112,\"MsgID\":1}"
+        YUrlAndroid.create().post(url,p,object : YObjectListener<YResponse<FarmersInfo>>() {
+            override fun success(bytes: ByteArray?, value: YResponse<FarmersInfo>?) {
+
+            }
+
+            override fun fail(value: String) {
+
+            }
+        })
     }
 
     private fun netUrl() {
