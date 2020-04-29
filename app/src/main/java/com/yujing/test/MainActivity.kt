@@ -8,6 +8,7 @@ import com.yujing.test.text.YResponse
 import com.yujing.url.YUrlAndroid
 import com.yujing.url.contract.YObjectListener
 import com.yujing.url.contract.YUrlDownloadFileListener
+import com.yujing.url.contract.YUrlListener
 import com.yujing.utils.YShow
 import com.yujing.utils.YToast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,17 +35,17 @@ class MainActivity : BaseActivity() {
         button8.text = "文件下载"
         button8.setOnClickListener { downLoad() }
     }
+
     private fun net2() {
         var url = "http://192.168.1.120:10007/api/SweepCode/JjdTwoDownload"
 //         url = "http://www.baidu.com"
         var p =
             "{\"DeviceNo\":\"868403023178079\",\"BatchNum\":\"54511002\",\"Command\":112,\"MsgID\":1}"
-        YUrlAndroid.create().post(url,p,object : YObjectListener<YResponse<FarmersInfo>>() {
-            override fun success(bytes: ByteArray?, value: YResponse<FarmersInfo>?) {
-
+        YUrlAndroid.create().post(url, p, object : YUrlListener {
+            override fun success(bytes: ByteArray?, value: String?) {
             }
 
-            override fun fail(value: String) {
+            override fun fail(value: String?) {
 
             }
         })
@@ -69,7 +70,8 @@ class MainActivity : BaseActivity() {
 //            }
 //        })
 
-        YUrlAndroid.create().post(url, Gson().toJson(map), object : YObjectListener<YResponse<FarmersInfo>>() {
+        YUrlAndroid.create()
+            .post(url, Gson().toJson(map), object : YObjectListener<YResponse<FarmersInfo>>() {
                 override fun success(bytes: ByteArray?, value: YResponse<FarmersInfo>?) {
                     runOnUiThread(Runnable {
                         YShow.finish()
