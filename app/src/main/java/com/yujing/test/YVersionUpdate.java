@@ -3,11 +3,13 @@ package com.yujing.test;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 
 import com.yujing.url.YUrlAndroid;
 import com.yujing.url.contract.YUrlDownloadFileListener;
+import com.yujing.utils.YInstallApk;
 import com.yujing.utils.YNoticeDownload;
 import com.yujing.utils.YNumber;
 import com.yujing.utils.YPath;
@@ -21,6 +23,24 @@ import java.io.File;
  * 更新APP
  *
  * @author yujing 2018年11月30日12:11:26
+ * 1.首先创建res/xml/file_paths.xml
+ * 内容：
+ * <?xml version="1.0" encoding="UTF-8"?>
+ * <resources>
+ * <paths>
+ * <external-path path="" name="download"/>
+ * </paths>
+ * </resources>
+ * 2.再在AndroidManifest.xml  中的application加入
+ * <provider
+ * android:name="androidx.core.content.FileProvider"
+ * android:authorities="${applicationId}.provider"
+ * android:exported="false"
+ * android:grantUriPermissions="true">
+ * <meta-data
+ * android:name="android.support.FILE_PROVIDER_PATHS"
+ * android:resource="@xml/file_paths" />
+ * </provider>
  */
 @SuppressWarnings("ALL")
 public class YVersionUpdate {
@@ -31,6 +51,7 @@ public class YVersionUpdate {
     private YNoticeDownload yNoticeDownload;
     private YNoticeDownload.DownLoadComplete downLoadCompleteListener;//下载成功回调
     private boolean useNotificationDownload = true;//是否使用通知栏下载
+    private YInstallApk yInstallApk;
 
     public Activity getActivity() {
         return activity;
@@ -84,6 +105,7 @@ public class YVersionUpdate {
         this.serverCode = serverCode;
         this.forceUpdate = forceUpdate;
         this.DownUrl = DownUrl;
+        yInstallApk = new YInstallApk(activity);
     }
 
     /**
@@ -207,7 +229,7 @@ public class YVersionUpdate {
                 if (downLoadCompleteListener != null) {
                     downLoadCompleteListener.complete(null, file);
                 } else {
-                    YUtils.installApk(activity, file);
+                    yInstallApk.install(file);
                 }
             }
 
@@ -220,6 +242,7 @@ public class YVersionUpdate {
             }
         });
     }
+
 
     /**
      * 下载APK
@@ -240,7 +263,7 @@ public class YVersionUpdate {
                 if (downLoadCompleteListener != null) {
                     downLoadCompleteListener.complete(uri, file);
                 } else {
-                    YUtils.installApk(activity, uri);
+                    yInstallApk.install(uri);
                 }
             }
         });
@@ -283,6 +306,12 @@ public class YVersionUpdate {
             yNoticeDownload.onResume();
     }
 
+    //需要调用
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        yInstallApk.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //需要调用
     public void onDestroy() {
         //注销广播
         if (yNoticeDownload != null)

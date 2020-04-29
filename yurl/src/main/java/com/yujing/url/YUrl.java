@@ -1,5 +1,7 @@
 package com.yujing.url;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.yujing.url.contract.YObjectListener;
 import com.yujing.url.contract.YUrlDownloadFileListener;
@@ -419,9 +421,35 @@ public class YUrl {
     void println(String str) {
         try {
             Class.forName("android.util.Log");
-            YLog.d("YUrl", str);
+            println("YUrl", str);
         } catch (Exception e) {
             System.out.println(str);
+        }
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param TAG tag
+     * @param msg 内容
+     */
+    private static void println(String TAG, String msg) {
+        int LOG_MAX_LENGTH = 2000;
+        int strLength = msg.length();
+        int start = 0;
+        int end = LOG_MAX_LENGTH;
+        for (int i = 0; i < 100; i++) {
+            //剩下的文本还是大于规定长度则继续重复截取并输出
+            if (strLength > end) {
+                String tag = TAG + i;
+                Log.d(tag, msg.substring(start, end));
+                start = end;
+                end = end + LOG_MAX_LENGTH;
+            } else {
+                String tag = i == 0 ? TAG : TAG + i;
+                Log.d(tag, msg.substring(start, strLength));
+                break;
+            }
         }
     }
 }
