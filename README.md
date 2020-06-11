@@ -12,6 +12,8 @@
 
 ##当前最新版：————>[![](https://jitpack.io/v/yutils/yurl.svg)](https://jitpack.io/#yutils/yurl)
 
+**[releases里面有JAR包。点击前往](https://github.com/yutils/yurl/releases)**
+
 ## Gradle 引用
 
 1. 在根build.gradle中添加
