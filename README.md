@@ -6,11 +6,12 @@
 > * 5.直接返回对象
 > * 6.异常回调原因
 > * 7.支持https,设置ssl文件
-> * 8.简单好用
+> * 8.sessionID的获取和设置
+> * 9.简单好用
 采用java8.0，安卓10.0，API29，androidx。
 
 
-##当前最新版：————>[![](https://jitpack.io/v/yutils/yurl.svg)](https://jitpack.io/#yutils/yurl)
+## 当前最新版：————>[![](https://jitpack.io/v/yutils/yurl.svg)](https://jitpack.io/#yutils/yurl)
 
 **[releases里面有JAR包。点击前往](https://github.com/yutils/yurl/releases)**
 
