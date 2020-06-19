@@ -13,7 +13,6 @@ import com.yujing.utils.YShow
 import com.yujing.utils.YToast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import java.util.*
 
 class MainActivity : BaseActivity() {
 
@@ -23,13 +22,17 @@ class MainActivity : BaseActivity() {
     override fun init() {
         //var a=findViewById<Button>(R.id.button1)
         button1.text = "yUrl网络请求"
-        button1.setOnClickListener { netUrl() }
-
+        button1.setOnClickListener { net1() }
+        button2.text = "测试post"
         button2.setOnClickListener { net2() }
-        button3.setOnClickListener { }
-        button4.setOnClickListener { }
-        button5.setOnClickListener { }
-        button6.setOnClickListener { }
+        button3.text = "RequestProperty"
+        button3.setOnClickListener { net3() }
+        button4.text = "44444444"
+        button4.setOnClickListener { net4() }
+        button5.text = "登录获取session"
+        button5.setOnClickListener { net5() }
+        button6.text = "通过session获取信息"
+        button6.setOnClickListener { net6() }
         button7.text = "App更新"
         button7.setOnClickListener { update() }
         button8.text = "文件下载"
@@ -51,46 +54,85 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private fun netUrl() {
+    private fun net1() {
         val map: MutableMap<String, Any> = HashMap()
         map["Command"] = 1
         map["MsgId"] = 0
         map["DeviceNo"] = "HJWV1X7SEL"
         map["CardId"] = "6214572180001408813"
-        var url = "http://192.168.1.170:10136/api/SelfPrint/FarmersInfo"
+        val url = "http://192.168.1.170:10136/api/SelfPrint/FarmersInfo"
         YShow.show(this, "网络请求")
-//        YUrlAndroid.create().post(url, Gson().toJson(map), object : YUrlListener{
-//            override fun fail(value: String?) {
-//                YShow.finish()
-//                YToast.show(App(), value)
-//            }
-//            override fun success(bytes: ByteArray?, value: String?) {
-//                YShow.finish()
-//                YToast.show(App(), value)
-//            }
-//        })
-
         YUrlAndroid.create()
             .post(url, Gson().toJson(map), object : YObjectListener<YResponse<FarmersInfo>>() {
                 override fun success(bytes: ByteArray?, value: YResponse<FarmersInfo>?) {
-                    runOnUiThread(Runnable {
+                    runOnUiThread {
                         YShow.finish()
                         YToast.show(App.get(), value?.data?.Name)
-                    })
+                    }
                 }
-
                 override fun fail(value: String) {
-                    runOnUiThread(Runnable {
+                    runOnUiThread {
                         YShow.finish()
                         YToast.show(App.get(), value)
-                    })
+                    }
                 }
             })
     }
 
+
+    private fun net3() {
+        val url = "https://creator.douyin.com/aweme/v1/creator/data/billboard?billboard_type=1"
+        YUrlAndroid.create().addRequestProperty("Referer", url).get(url, object : YUrlListener {
+            override fun fail(value: String?) {
+                text2.text = "失败：$value"
+            }
+
+            override fun success(bytes: ByteArray?, value: String?) {
+                text2.text = "成功：$value"
+            }
+        })
+    }
+
+    private fun net4() {
+
+    }
+
+    var session = ""
+    private fun net5() {
+        val url = "http://crash.0-8.top:8888/crash/user/login"
+        val hashMap: HashMap<String, Any> = hashMapOf("name" to "yujing", "password" to "wtugeqh")
+        YUrlAndroid.create().setSessionListener { sessionId ->
+            session = sessionId
+            runOnUiThread { text1.text = "sessionId：$sessionId" }
+        }.post(url, hashMap, object : YUrlListener {
+            override fun success(bytes: ByteArray?, value: String?) {
+                text2.text = "成功：$value"
+            }
+
+            override fun fail(value: String?) {
+                text2.text = "失败：$value"
+            }
+        })
+    }
+
+    private fun net6() {
+        val url = "http://crash.0-8.top:8888/crash/"
+        YUrlAndroid.create().setSessionId(session).get(url, object : YUrlListener {
+
+            override fun success(bytes: ByteArray?, value: String?) {
+                text2.text = "成功：$value"
+            }
+
+            override fun fail(value: String?) {
+                text2.text = "失败：$value"
+            }
+        })
+    }
+
+
     private fun update() {
         val url = "http://dldir1.qq.com/qqfile/qq/QQ8.9.2/20760/QQ8.9.2.exe"
-        val yVersionUpdate = YVersionUpdate(this, 2, false, url)
+        val yVersionUpdate = YVersionUpdate(this, 100, false, url)
         yVersionUpdate.isUseNotificationDownload = false
         yVersionUpdate.checkUpdate()
     }

@@ -4,10 +4,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.yujing.url.contract.YObjectListener;
+import com.yujing.url.contract.YSessionListener;
 import com.yujing.url.contract.YUrlDownloadFileListener;
 import com.yujing.url.contract.YUrlListener;
 import com.yujing.url.contract.YUrlLoadListener;
-import com.yujing.url.contract.YUrlProgressListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,71 +21,51 @@ import java.util.Map;
  *
  * @author yujing 2020年3月16日13:50:08
  */
-public class YUrl {
+public class YUrl extends YUrlBase {
     private static final String TAG = "YUrl";
     static boolean showLog = true;
-    String contentType = "application/x-www-form-urlencoded;charset=utf-8";
-    int connectTimeout = 1000 * 20;
-    String crtSSL;
 
-    /**
-     * 创建YUrl对象
-     *
-     * @return YUrl
-     */
-    public static YUrl create() {
-        return new YUrl();
-    }
-
-    public String getCrtSSL() {
-        return crtSSL;
-    }
-
-    /**
-     * 设置https请求SSL的crt证书
-     *
-     * @param crtSSL crt证书
-     * @return YUrl
-     */
-    public YUrl setCrtSSL(String crtSSL) {
-        this.crtSSL = crtSSL;
-        return this;
-    }
-
-    public static void setShowLog(boolean showLog) {
-        YUrl.showLog = showLog;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    /**
-     * 设置contentType
-     *
-     * @param contentType contentType
-     * @return YUrl
-     */
+    @Override
     public YUrl setContentType(String contentType) {
-        this.contentType = contentType;
+        super.setContentType(contentType);
         return this;
     }
 
-    public int getConnectTimeout() {
-        return connectTimeout;
-    }
-
-    /**
-     * 设置超时时间
-     *
-     * @param connectTimeout connectTimeout毫秒
-     * @return YUrl
-     */
+    @Override
     public YUrl setConnectTimeout(int connectTimeout) {
-        this.connectTimeout = connectTimeout;
+        super.setConnectTimeout(connectTimeout);
         return this;
     }
 
+    @Override
+    public YUrl setCrtSSL(String crtSSL) {
+        super.setCrtSSL(crtSSL);
+        return this;
+    }
+
+    @Override
+    public YUrl setRequestProperty(String key, String value) {
+        super.setRequestProperty(key, value);
+        return this;
+    }
+
+    @Override
+    public YUrl addRequestProperty(String key, String value) {
+        super.addRequestProperty(key, value);
+        return this;
+    }
+
+    @Override
+    public YUrl setSessionListener(YSessionListener ySessionListener) {
+        super.setSessionListener(ySessionListener);
+        return this;
+    }
+
+    @Override
+    public YUrl setSessionId(String sessionId) {
+        super.setSessionId(sessionId);
+        return this;
+    }
 
     /**
      * get请求
@@ -96,11 +76,7 @@ public class YUrl {
     public void get(final String requestUrl, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
-                YUrlBase yUrlBase = new YUrlBase();
-                yUrlBase.setContentType(contentType);
-                yUrlBase.setConnectTimeout(connectTimeout);
-                yUrlBase.setCrtSSL(crtSSL);
-                byte[] bytes = yUrlBase.get(requestUrl);
+                byte[] bytes = get(requestUrl);
                 String result = new String(bytes);
                 if (showLog)
                     println("请求地址↓：\nGet--->" + requestUrl + "\n请求结果：" + result);
@@ -113,7 +89,6 @@ public class YUrl {
         });
         YUrlThreadPool.add(thread);
     }
-
 
     /**
      * get请求
@@ -185,11 +160,7 @@ public class YUrl {
     public void post(final String requestUrl, final byte[] requestBytes, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
-                YUrlBase yUrlBase = new YUrlBase();
-                yUrlBase.setContentType(contentType);
-                yUrlBase.setConnectTimeout(connectTimeout);
-                yUrlBase.setCrtSSL(crtSSL);
-                byte[] bytes = yUrlBase.post(requestUrl, requestBytes);
+                byte[] bytes = post(requestUrl, requestBytes);
                 String result = new String(bytes);
                 if (showLog)
                     println("请求地址↓：\nPost--->" + requestUrl + (requestBytes == null ? "" : ("\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
@@ -301,11 +272,7 @@ public class YUrl {
     public void upload(final String requestUrl, final byte[] requestBytes, final Map<String, File> fileMap, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
-                YUrlComplex yUrlComplex = new YUrlComplex();
-                yUrlComplex.setContentType(contentType);
-                yUrlComplex.setConnectTimeout(connectTimeout);
-                yUrlComplex.setCrtSSL(crtSSL);
-                byte[] bytes = yUrlComplex.upload(requestUrl, requestBytes, fileMap);
+                byte[] bytes = upload(requestUrl, requestBytes, fileMap);
                 String result = new String(bytes);
                 if (showLog)
                     println("请求地址↓：\nupload--->" + requestUrl + (requestBytes == null ? "" : ("\n文件数：" + fileMap.size() + "\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
@@ -329,11 +296,7 @@ public class YUrl {
     public void downloadFile(final String requestUrl, final File file, final YUrlDownloadFileListener listener) {
         Thread thread = new Thread(() -> {
             try {
-                YUrlBase yUrlBase = new YUrlBase();
-                yUrlBase.setConnectTimeout(connectTimeout);
-                yUrlBase.setCrtSSL(crtSSL);
-                YUrlProgressListener progressListener = listener::progress;
-                yUrlBase.downloadFile(requestUrl, file, progressListener);
+                downloadFile(requestUrl, file, listener::progress);
                 if (showLog)
                     println("文件下载↓：\nGet--->" + requestUrl + "\n保存路径：" + file.getPath());
                 listener.success(file);
@@ -355,11 +318,7 @@ public class YUrl {
     public void load(final String requestUrl, final YUrlLoadListener listener) {
         Thread thread = new Thread(() -> {
             try {
-                YUrlBase yUrlBase = new YUrlBase();
-                yUrlBase.setConnectTimeout(connectTimeout);
-                yUrlBase.setCrtSSL(crtSSL);
-                YUrlProgressListener progressListener = listener::progress;
-                byte[] bytes = yUrlBase.load(requestUrl, progressListener);
+                byte[] bytes = load(requestUrl, listener::progress);
                 if (showLog)
                     println("文件加载↓：\nGet--->" + requestUrl);
                 listener.success(bytes);
@@ -441,12 +400,12 @@ public class YUrl {
         for (int i = 0; i < 100; i++) {
             //剩下的文本还是大于规定长度则继续重复截取并输出
             if (strLength > end) {
-                String tag = TAG + i;
+                String tag = TAG + " " + i;
                 Log.d(tag, msg.substring(start, end));
                 start = end;
                 end = end + LOG_MAX_LENGTH;
             } else {
-                String tag = i == 0 ? TAG : TAG + i;
+                String tag = i == 0 ? TAG : TAG + " " + i;
                 Log.d(tag, msg.substring(start, strLength));
                 break;
             }
