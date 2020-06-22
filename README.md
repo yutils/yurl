@@ -126,7 +126,6 @@ YUrlAndroid.create().downloadFile(url, f, object : YUrlDownloadFileListener {
 > * 必须权限  android.permission.INTERNET
 
 
-
 Github地址：[https://github.com/yutils/yurl](https://github.com/yutils/yurl)
 
 我的CSDN：[https://blog.csdn.net/Yu1441](https://blog.csdn.net/Yu1441)
