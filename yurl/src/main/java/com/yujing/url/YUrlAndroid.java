@@ -103,6 +103,7 @@ public class YUrlAndroid extends YUrl {
      * @param listener   监听
      * @param <T>        类型
      */
+    @Override
     public <T> void get(String requestUrl, final YObjectListener<T> listener) {
         super.get(requestUrl, new YUrlListener() {
             @Override
@@ -134,6 +135,17 @@ public class YUrlAndroid extends YUrl {
                 handler.post(new YRunnable(() -> listener.fail(value)));
             }
         });
+    }
+    /**
+     * post请求
+     *
+     * @param requestUrl url
+     * @param request    请求内容
+     * @param listener   监听
+     */
+    @Override
+    public void post(final String requestUrl, final String request, final YUrlListener listener) {
+        post(requestUrl, request.getBytes(), listener);
     }
 
     /**
@@ -173,6 +185,7 @@ public class YUrlAndroid extends YUrl {
      * @param listener   监听
      * @param <T>        类型
      */
+    @Override
     public <T> void post(String requestUrl, Map<String, Object> paramsMap, YObjectListener<T> listener) {
         post(requestUrl, YUrlUtils.mapToParams(paramsMap).toString().getBytes(), listener);
     }
@@ -185,6 +198,7 @@ public class YUrlAndroid extends YUrl {
      * @param listener   监听
      * @param <T>        类型
      */
+    @Override
     public <T> void post(final String requestUrl, String params, YObjectListener<T> listener) {
         post(requestUrl, params.getBytes(), listener);
     }
@@ -197,6 +211,7 @@ public class YUrlAndroid extends YUrl {
      * @param listener     监听
      * @param <T>          类型
      */
+    @Override
     public <T> void post(String requestUrl, byte[] requestBytes, final YObjectListener<T> listener) {
         super.post(requestUrl, requestBytes, new YUrlListener() {
             @Override
