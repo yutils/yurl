@@ -31,7 +31,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.yutils:yurl:1.0.5'
+    implementation 'com.github.yutils:yurl:1.0.6'
 }
 ```
 
@@ -40,7 +40,7 @@ dependencies {
   2.YUrlAndroid返回结果在主线程，适合安卓工程
 
 <font color=#0099ff size=4 >java</font>
-```java
+``` java
 String url="http://192.168.1.170:10136/api/getUser";
 HashMap <String,Object> hashMap=new HashMap<>();
 hashMap.put("id","123");
@@ -73,22 +73,23 @@ YUrlAndroid.create().post(url, hashMap, new YUrlListener() {
 ```
 
 <font color=#0099ff size=4 >kotlin</font>
-```kotlin
-val map: MutableMap<String, Any> = HashMap()
-map["Command"] = 1
-map["MsgId"] = 0
-map["DeviceNo"] = "HJWV1X7SEL"
-map["CardId"] = "6214572180001408813"
-var url = "http://192.168.1.170:10136/api/getUser"
-YShow.show(this, "网络请求")
+``` kotlin
+var session = ""
 
-//请求返回字符串
-YUrlAndroid.create().post(url, map, object : YUrlListener{
-   override fun fail(value: String?) {
-   }
-   override fun success(bytes: ByteArray?, value: String?) {
-   }
+val url = "http://www.xxx.xxx/xxx"
+val hashMap: HashMap<String, Any> = hashMapOf("name" to "abc", "password" to "123456")
+YUrlAndroid.create().setSessionListener { sessionId ->
+    //获取的session
+    session = sessionId
+}.post(url, hashMap, object : YUrlListener {
+    override fun success(bytes: ByteArray?, value: String?) {
+    //成功
+    }
+    override fun fail(value: String?) {
+    //失败
+    }
 })
+    
 
 //请求返回对象
 YUrlAndroid.create().post(url, map, object : YObjectListener<User>() {

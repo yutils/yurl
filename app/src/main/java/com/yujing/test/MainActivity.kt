@@ -108,7 +108,6 @@ class MainActivity : BaseActivity() {
             override fun success(bytes: ByteArray?, value: String?) {
                 text2.text = "成功：$value"
             }
-
             override fun fail(value: String?) {
                 text2.text = "失败：$value"
             }
@@ -118,11 +117,9 @@ class MainActivity : BaseActivity() {
     private fun net6() {
         val url = "http://crash.0-8.top:8888/crash/"
         YUrlAndroid.create().setSessionId(session).get(url, object : YUrlListener {
-
             override fun success(bytes: ByteArray?, value: String?) {
                 text2.text = "成功：$value"
             }
-
             override fun fail(value: String?) {
                 text2.text = "失败：$value"
             }
