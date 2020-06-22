@@ -136,6 +136,7 @@ public class YUrlAndroid extends YUrl {
             }
         });
     }
+
     /**
      * post请求
      *
@@ -144,8 +145,20 @@ public class YUrlAndroid extends YUrl {
      * @param listener   监听
      */
     @Override
-    public void post(final String requestUrl, final String request, final YUrlListener listener) {
+    public void post(String requestUrl, String request, YUrlListener listener) {
         post(requestUrl, request.getBytes(), listener);
+    }
+
+    /**
+     * post请求
+     *
+     * @param requestUrl url
+     * @param paramsMap  key，value
+     * @param listener   监听
+     */
+    @Override
+    public void post(String requestUrl, Map<String, Object> paramsMap, YUrlListener listener) {
+        post(requestUrl, YUrlUtils.mapToParams(paramsMap).toString().getBytes(), listener);
     }
 
     /**
@@ -245,6 +258,33 @@ public class YUrlAndroid extends YUrl {
         });
     }
 
+
+    /**
+     * 文件上传post
+     *
+     * @param requestUrl url
+     * @param paramsMap  key，value
+     * @param fileMap    文件列表
+     * @param listener   监听
+     */
+    @Override
+    public void upload(final String requestUrl, Map<String, Object> paramsMap, Map<String, File> fileMap, final YUrlListener listener) {
+        upload(requestUrl, YUrlUtils.mapToParams(paramsMap).toString().getBytes(), fileMap, listener);
+    }
+
+    /**
+     * 文件上传post
+     *
+     * @param requestUrl url
+     * @param params     文本
+     * @param fileMap    文件列表
+     * @param listener   监听
+     */
+    @Override
+    public void upload(final String requestUrl, String params, Map<String, File> fileMap, final YUrlListener listener) {
+        upload(requestUrl, params.getBytes(), fileMap, listener);
+    }
+
     /**
      * 文件上传post
      *
@@ -277,7 +317,6 @@ public class YUrlAndroid extends YUrl {
      */
     @Override
     public void downloadFile(final String requestUrl, final File file, final YUrlDownloadFileListener listener) {
-
         super.downloadFile(requestUrl, file, new YUrlDownloadFileListener() {
 
             @Override
