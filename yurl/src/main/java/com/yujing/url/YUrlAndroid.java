@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.yujing.url.contract.YObjectListener;
+import com.yujing.url.contract.YSessionListener;
 import com.yujing.url.contract.YUrlDownloadFileListener;
 import com.yujing.url.contract.YUrlListener;
 import com.yujing.url.contract.YUrlLoadListener;
@@ -25,39 +26,45 @@ public class YUrlAndroid extends YUrl {
         return new YUrlAndroid();
     }
 
-    /**
-     * 设置超时时间
-     *
-     * @param connectTimeout connectTimeout毫秒
-     * @return YUrl
-     */
-    @Override
-    public YUrlAndroid setConnectTimeout(int connectTimeout) {
-        this.connectTimeout = connectTimeout;
-        return this;
-    }
-
-    /**
-     * 设置contentType
-     *
-     * @param contentType contentType
-     * @return YUrl
-     */
     @Override
     public YUrlAndroid setContentType(String contentType) {
-        this.contentType = contentType;
+        super.setContentType(contentType);
         return this;
     }
 
-    /**
-     * 设置https请求SSL的crt证书
-     *
-     * @param crtSSL crt证书
-     * @return YUrl
-     */
+    @Override
+    public YUrlAndroid setConnectTimeout(int connectTimeout) {
+        super.setConnectTimeout(connectTimeout);
+        return this;
+    }
+
     @Override
     public YUrlAndroid setCrtSSL(String crtSSL) {
-        this.crtSSL = crtSSL;
+        super.setCrtSSL(crtSSL);
+        return this;
+    }
+
+    @Override
+    public YUrlAndroid setRequestProperty(String key, String value) {
+        super.setRequestProperty(key, value);
+        return this;
+    }
+
+    @Override
+    public YUrlAndroid addRequestProperty(String key, String value) {
+        super.addRequestProperty(key, value);
+        return this;
+    }
+
+    @Override
+    public YUrlAndroid setSessionListener(YSessionListener ySessionListener) {
+        super.setSessionListener(ySessionListener);
+        return this;
+    }
+
+    @Override
+    public YUrlAndroid setSessionId(String sessionId) {
+        super.setSessionId(sessionId);
         return this;
     }
 

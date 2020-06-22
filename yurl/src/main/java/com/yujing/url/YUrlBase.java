@@ -106,7 +106,7 @@ public class YUrlBase {
     }
 
     /**
-     * get请求
+     * get请求，同步柱塞试
      *
      * @param requestUrl url
      * @return 请求结果
@@ -152,7 +152,7 @@ public class YUrlBase {
     }
 
     /**
-     * post请求
+     * post请求，同步柱塞试
      *
      * @param requestUrl   rul
      * @param requestBytes 请求内容
@@ -211,7 +211,7 @@ public class YUrlBase {
     }
 
     /**
-     * 文件下载
+     * 文件下载，同步柱塞试
      *
      * @param requestUrl url
      * @param file       下载的文件
@@ -270,7 +270,7 @@ public class YUrlBase {
     }
 
     /**
-     * 加载
+     * 加载，同步柱塞试
      *
      * @param requestUrl url
      * @param listener   进度监听
@@ -328,7 +328,7 @@ public class YUrlBase {
     }
 
     /**
-     * 文件上传
+     * 文件上传，同步柱塞试
      *
      * @param requestUrl   url
      * @param requestBytes 请求内容
