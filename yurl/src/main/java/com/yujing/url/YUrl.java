@@ -25,6 +25,10 @@ public class YUrl extends YUrlBase {
     private static final String TAG = "YUrl";
     static boolean showLog = true;
 
+    public static void setShowLog(boolean showLog) {
+        YUrl.showLog = showLog;
+    }
+
     @Override
     public YUrl setContentType(String contentType) {
         super.setContentType(contentType);

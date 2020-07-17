@@ -22,17 +22,17 @@ public class YUrlThreadPool {
     /**
      * 把一个线程扔进线程池
      *
-     * @param thread 要执行的线程
+     * @param runnable 要执行的线程
      */
-    public synchronized static void add(Thread thread) {
+    public synchronized static void add(Runnable runnable) {
         synchronized (sTpe) {
             if (sTpe.isShutdown()) {
                 sTpe = new ScheduledThreadPoolExecutor(threadNum);
                 synchronized (sTpe) {
-                    sTpe.execute(thread);
+                    sTpe.execute(runnable);
                 }
             } else {
-                sTpe.execute(thread);
+                sTpe.execute(runnable);
             }
         }
     }
