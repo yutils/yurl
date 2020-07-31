@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class YUrl extends YUrlBase {
     private static final String TAG = "YUrl";
-    static boolean showLog = true;
+    static volatile boolean showLog = true;
 
     public static void setShowLog(boolean showLog) {
         YUrl.showLog = showLog;
