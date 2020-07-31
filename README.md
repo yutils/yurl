@@ -1,4 +1,9 @@
-# yurl网络请求，支持java，kotlin
+# yurl网络请求，支持java，kotlin,已更名YHttp
+
+# **[此工程停止更新，点击跳转到新地址（YHttp）](https://github.com/yutils/yhttp)**
+
+# **[YHttp工程。点击前往](https://github.com/yutils/yhttp)**
+
 > * 1.支持get，post请求
 > * 2.支持文件上传下载，回调进度条
 > * 3.post请求可为字符串，map，byte[]
