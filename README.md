@@ -50,7 +50,7 @@ String url="http://192.168.1.170:10136/api/getUser";
 HashMap <String,Object> hashMap=new HashMap<>();
 hashMap.put("id","123");
 
-//请求返回字符串
+//请求返回对象
 YUrlAndroid.create().post(url, hashMap, new YObjectListener<User>() {
     @Override
     public void success(byte[] bytes, User value) {
@@ -63,7 +63,7 @@ YUrlAndroid.create().post(url, hashMap, new YObjectListener<User>() {
     }
 });
 
-//请求返回对象
+//请求返回字符串
 YUrlAndroid.create().post(url, hashMap, new YUrlListener() {
     @Override
     public void success(byte[] bytes, String value) throws Exception {
