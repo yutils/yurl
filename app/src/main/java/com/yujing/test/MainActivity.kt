@@ -52,6 +52,7 @@ class MainActivity : BaseActivity() {
 
             }
         })
+
     }
 
     private fun net1() {
@@ -115,7 +116,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun net6() {
-        val url = "http://crash.0-8.top:8888/crash/"
+        val url = "http://192.168.6.9:8888/crash/"
         YUrlAndroid.create().setSessionId(session).get(url, object : YUrlListener {
             override fun success(bytes: ByteArray?, value: String?) {
                 text2.text = "成功：$value"

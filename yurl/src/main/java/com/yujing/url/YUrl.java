@@ -20,7 +20,9 @@ import java.util.Map;
  * 网络请求类
  *
  * @author yujing 2020年3月16日13:50:08
+ * 请使用 YHttp
  */
+@Deprecated
 public class YUrl extends YUrlBase {
     private static final String TAG = "YUrl";
     static volatile boolean showLog = true;
@@ -80,10 +82,10 @@ public class YUrl extends YUrlBase {
     public void get(final String requestUrl, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
+                if (showLog) println("请求地址：Post--->" + requestUrl);
                 byte[] bytes = get(requestUrl);
                 String result = new String(bytes);
-                if (showLog)
-                    println("请求地址↓：\nGet--->" + requestUrl + "\n请求结果：" + result);
+                if (showLog) println("请求结果：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -164,10 +166,11 @@ public class YUrl extends YUrlBase {
     public void post(final String requestUrl, final byte[] requestBytes, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
+                if (showLog) println("请求地址：Post--->" + requestUrl);
+                if (showLog && requestBytes != null) println("请求参数：" + new String(requestBytes));
                 byte[] bytes = post(requestUrl, requestBytes);
                 String result = new String(bytes);
-                if (showLog)
-                    println("请求地址↓：\nPost--->" + requestUrl + (requestBytes == null ? "" : ("\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
+                if (showLog) println("请求结果：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -276,10 +279,11 @@ public class YUrl extends YUrlBase {
     public void upload(final String requestUrl, final byte[] requestBytes, final Map<String, File> fileMap, final YUrlListener listener) {
         Thread thread = new Thread(() -> {
             try {
+                if (showLog)
+                    println("文件上传开始：\nupload--->" + requestUrl + (requestBytes == null ? "" : ("\n文件数：" + fileMap.size() + "\n请求参数：" + new String(requestBytes))));
                 byte[] bytes = upload(requestUrl, requestBytes, fileMap);
                 String result = new String(bytes);
-                if (showLog)
-                    println("请求地址↓：\nupload--->" + requestUrl + (requestBytes == null ? "" : ("\n文件数：" + fileMap.size() + "\n请求参数：" + new String(requestBytes))) + "\n请求结果：" + result);
+                if (showLog) println("文件上传完成：" + result);
                 listener.success(bytes, result);
             } catch (Exception e) {
                 exception(e, listener);
@@ -300,9 +304,10 @@ public class YUrl extends YUrlBase {
     public void downloadFile(final String requestUrl, final File file, final YUrlDownloadFileListener listener) {
         Thread thread = new Thread(() -> {
             try {
+                if (showLog) println("文件下载开始：\nGet--->" + requestUrl);
                 downloadFile(requestUrl, file, listener::progress);
                 if (showLog)
-                    println("文件下载↓：\nGet--->" + requestUrl + "\n保存路径：" + file.getPath());
+                    println("文件下载完成：\nGet--->" + requestUrl + "\n保存路径：" + file.getPath());
                 listener.success(file);
             } catch (Exception e) {
                 exception(e, listener);
@@ -322,9 +327,11 @@ public class YUrl extends YUrlBase {
     public void load(final String requestUrl, final YUrlLoadListener listener) {
         Thread thread = new Thread(() -> {
             try {
+                if (showLog)
+                    println("文件加载开始：\nGet--->" + requestUrl);
                 byte[] bytes = load(requestUrl, listener::progress);
                 if (showLog)
-                    println("文件加载↓：\nGet--->" + requestUrl);
+                    println("文件加载完成");
                 listener.success(bytes);
             } catch (Exception e) {
                 exception(e, listener);
@@ -364,14 +371,12 @@ public class YUrl extends YUrlBase {
      * @param listener 监听
      */
     void error(String error, Object listener) {
+        printlnE(error);
         if (listener instanceof YUrlListener) {
-            println(TAG + error);
             ((YUrlListener) listener).fail(error);
         } else if (listener instanceof YUrlLoadListener) {
-            println(TAG + error);
             ((YUrlLoadListener) listener).fail(error);
         } else if (listener instanceof YUrlDownloadFileListener) {
-            println(TAG + error);
             ((YUrlDownloadFileListener) listener).fail(error);
         }
     }
@@ -389,7 +394,18 @@ public class YUrl extends YUrlBase {
             System.out.println(str);
         }
     }
-
+    /**
+     * 打印错误日志。如果发现包含Log就用Log打印，否则就用println
+     * @param str 错误内容
+     */
+    void printlnE(String str) {
+        try {
+            Class.forName("android.util.Log");
+            Log.e("YHttp", str);
+        } catch (Exception e) {
+            System.err.println(str);
+        }
+    }
     /**
      * 打印日志
      *

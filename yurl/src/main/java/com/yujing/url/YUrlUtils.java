@@ -10,6 +10,7 @@ import java.util.Map;
  *
  * @author yujing 2019年5月31日15:54:48
  */
+@Deprecated
 public class YUrlUtils {
     /**
      * 请求map转换成String

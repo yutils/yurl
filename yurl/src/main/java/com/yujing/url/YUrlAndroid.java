@@ -17,7 +17,9 @@ import java.util.Map;
  * 网络请求类
  *
  * @author yujing 2020年3月16日13:50:01
+ * 请使用 YHttp
  */
+@Deprecated
 public class YUrlAndroid extends YUrl {
     private static final String TAG = "YUrlAndroid";
     private final Handler handler = new Handler();

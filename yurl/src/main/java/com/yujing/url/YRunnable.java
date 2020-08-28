@@ -5,6 +5,7 @@ import com.yujing.url.contract.YRun;
 /**
  * Runnable线程，里面包含try，解决Runnable.run包含try过于复杂问题
  */
+@Deprecated
 public class YRunnable implements Runnable {
     private final YRun yRun;
 

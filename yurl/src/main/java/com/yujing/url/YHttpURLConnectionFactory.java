@@ -21,6 +21,7 @@ import javax.net.ssl.X509TrustManager;
  *
  * @author yujing 2019年7月4日14:04:28
  */
+@Deprecated
 public class YHttpURLConnectionFactory {
     /**
      * 创建HttpURLConnection对象，如果请求包含https就创建HttpsURLConnection,并且创建证书

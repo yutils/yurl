@@ -24,7 +24,9 @@ import java.util.Objects;
  * 网络请求基础类，柱塞式
  *
  * @author yujing 2019年5月31日15:52:55
+ * 请使用 YHttpBase
  */
+@Deprecated
 public class YUrlBase {
     protected String contentType = "application/x-www-form-urlencoded;charset=utf-8";
     protected int connectTimeout = 1000 * 20;

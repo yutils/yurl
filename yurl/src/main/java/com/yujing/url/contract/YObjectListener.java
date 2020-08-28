@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
  * @param <T> 泛型
  * @author 余静 2019年11月20日11:01:42
  */
-
+@Deprecated
 public abstract class YObjectListener<T> {
     private Type type = null;
 

@@ -7,6 +7,7 @@ import java.io.File;
  *
  * @author yujing 2019年5月31日15:29:13
  */
+@Deprecated
 public interface YUrlDownloadFileListener {
     void progress(int downloadSize, int fileSize);
 

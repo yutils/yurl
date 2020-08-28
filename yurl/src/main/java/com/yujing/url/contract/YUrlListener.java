@@ -5,6 +5,7 @@ package com.yujing.url.contract;
  *
  * @author 余静 2019年5月31日15:28:48
  */
+@Deprecated
 public interface YUrlListener {
     void success(byte[] bytes, String value) throws Exception;
 

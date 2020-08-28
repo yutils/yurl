@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  *
  * @author yujing 2019年5月31日15:53:51
  */
+@Deprecated
 public class YUrlThreadPool {
     private static volatile int threadNum = 20;
     private static ScheduledThreadPoolExecutor sTpe = new ScheduledThreadPoolExecutor(threadNum);

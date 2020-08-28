@@ -5,6 +5,7 @@ package com.yujing.url.contract;
  *
  * @author yujing 2019年5月31日15:29:13
  */
+@Deprecated
 public interface YUrlLoadListener {
     void progress(int downloadSize, int size);
 
