@@ -11,6 +11,7 @@ import com.yujing.url.contract.YUrlDownloadFileListener
 import com.yujing.url.contract.YUrlListener
 import com.yujing.utils.YShow
 import com.yujing.utils.YToast
+import com.yujing.utils.YVersionUpdate
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -71,6 +72,7 @@ class MainActivity : BaseActivity() {
                         YToast.show(App.get(), value?.data?.Name)
                     }
                 }
+
                 override fun fail(value: String) {
                     runOnUiThread {
                         YShow.finish()
@@ -109,6 +111,7 @@ class MainActivity : BaseActivity() {
             override fun success(bytes: ByteArray?, value: String?) {
                 text2.text = "成功：$value"
             }
+
             override fun fail(value: String?) {
                 text2.text = "失败：$value"
             }
@@ -121,6 +124,7 @@ class MainActivity : BaseActivity() {
             override fun success(bytes: ByteArray?, value: String?) {
                 text2.text = "成功：$value"
             }
+
             override fun fail(value: String?) {
                 text2.text = "失败：$value"
             }
@@ -131,8 +135,7 @@ class MainActivity : BaseActivity() {
     private fun update() {
         val url = "http://dldir1.qq.com/qqfile/qq/QQ8.9.2/20760/QQ8.9.2.exe"
         val yVersionUpdate = YVersionUpdate(this, 100, false, url)
-        yVersionUpdate.isUseNotificationDownload = false
-        yVersionUpdate.checkUpdate()
+        yVersionUpdate.update()
     }
 
     private fun downLoad() {
