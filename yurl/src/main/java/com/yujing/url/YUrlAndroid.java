@@ -1,6 +1,7 @@
 package com.yujing.url;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Deprecated
 public class YUrlAndroid extends YUrl {
     private static final String TAG = "YUrlAndroid";
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public static YUrlAndroid create() {
         return new YUrlAndroid();

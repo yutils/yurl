@@ -2,59 +2,59 @@ package com.yujing.test
 
 import android.content.Context
 import android.os.Environment
+import android.widget.TextView
 import com.google.gson.Gson
+import com.yujing.base.YBaseActivity
+import com.yujing.test.databinding.ActivityAllTestBinding
 import com.yujing.test.text.FarmersInfo
 import com.yujing.test.text.YResponse
 import com.yujing.url.YUrlAndroid
 import com.yujing.url.contract.YObjectListener
 import com.yujing.url.contract.YUrlDownloadFileListener
 import com.yujing.url.contract.YUrlListener
+import com.yujing.utils.YPermissions
 import com.yujing.utils.YShow
 import com.yujing.utils.YToast
 import com.yujing.utils.YVersionUpdate
-import kotlinx.android.synthetic.main.activity_main.*
+import com.yutils.view.utils.Create
 import java.io.File
 
-class MainActivity : BaseActivity() {
-
-    override val layoutId: Int
-        get() = R.layout.activity_main
-
+class MainActivity : YBaseActivity<ActivityAllTestBinding>(R.layout.activity_all_test) {
+    lateinit var textView1: TextView
+    lateinit var textView2: TextView
     override fun init() {
-        //var a=findViewById<Button>(R.id.button1)
-        button1.text = "yUrl网络请求"
-        button1.setOnClickListener { net1() }
-        button2.text = "测试post"
-        button2.setOnClickListener { net2() }
-        button3.text = "RequestProperty"
-        button3.setOnClickListener { net3() }
-        button4.text = "44444444"
-        button4.setOnClickListener { net4() }
-        button5.text = "登录获取session"
-        button5.setOnClickListener { net5() }
-        button6.text = "通过session获取信息"
-        button6.setOnClickListener { net6() }
-        button7.text = "App更新"
-        button7.setOnClickListener { update() }
-        button8.text = "文件下载"
-        button8.setOnClickListener { downLoad() }
+        YPermissions.requestAll(this)
+        binding.wll.removeAllViews()
+        binding.ll.removeAllViews()
+        textView1 = Create.textView(binding.ll)
+        textView2 = Create.textView(binding.ll)
+
+        Create.button(binding.wll, "yUrl网络请求") {
+            net1()
+        }
+        Create.button(binding.wll, "测试post") {
+            net2()
+        }
+        Create.button(binding.wll, "RequestProperty") {
+            net3()
+        }
+
+        Create.button(binding.wll, "登录获取session") {
+            net5()
+        }
+
+        Create.button(binding.wll, "通过session获取信息") {
+            net6()
+        }
+
+        Create.button(binding.wll, "App更新") {
+            update()
+        }
+        Create.button(binding.wll, "文件下载") {
+            downLoad()
+        }
     }
 
-    private fun net2() {
-        var url = "http://192.168.1.120:10007/api/SweepCode/JjdTwoDownload"
-//         url = "http://www.baidu.com"
-        var p =
-            "{\"DeviceNo\":\"868403023178079\",\"BatchNum\":\"54511002\",\"Command\":112,\"MsgID\":1}"
-        YUrlAndroid.create().post(url, p, object : YUrlListener {
-            override fun success(bytes: ByteArray?, value: String?) {
-            }
-
-            override fun fail(value: String?) {
-
-            }
-        })
-
-    }
 
     private fun net1() {
         val map: MutableMap<String, Any> = HashMap()
@@ -82,22 +82,34 @@ class MainActivity : BaseActivity() {
             })
     }
 
+    private fun net2() {
+        var url = "http://192.168.1.120:10007/api/SweepCode/JjdTwoDownload"
+//         url = "http://www.baidu.com"
+        var p =
+            "{\"DeviceNo\":\"868403023178079\",\"BatchNum\":\"54511002\",\"Command\":112,\"MsgID\":1}"
+        YUrlAndroid.create().post(url, p, object : YUrlListener {
+            override fun success(bytes: ByteArray?, value: String?) {
+                textView2.text = "失败：$value"
+            }
+
+            override fun fail(value: String?) {
+                textView2.text = "失败：$value"
+            }
+        })
+
+    }
 
     private fun net3() {
         val url = "https://creator.douyin.com/aweme/v1/creator/data/billboard?billboard_type=1"
         YUrlAndroid.create().addRequestProperty("Referer", url).get(url, object : YUrlListener {
             override fun fail(value: String?) {
-                text2.text = "失败：$value"
+                textView2.text = "失败：$value"
             }
 
             override fun success(bytes: ByteArray?, value: String?) {
-                text2.text = "成功：$value"
+                textView2.text = "成功：$value"
             }
         })
-    }
-
-    private fun net4() {
-
     }
 
     var session = ""
@@ -106,14 +118,14 @@ class MainActivity : BaseActivity() {
         val hashMap: HashMap<String, Any> = hashMapOf("name" to "yujing", "password" to "wtugeqh")
         YUrlAndroid.create().setSessionListener { sessionId ->
             session = sessionId
-            runOnUiThread { text1.text = "sessionId：$sessionId" }
+            runOnUiThread { textView1.text = "sessionId：$sessionId" }
         }.post(url, hashMap, object : YUrlListener {
             override fun success(bytes: ByteArray?, value: String?) {
-                text2.text = "成功：$value"
+                textView2.text = "成功：$value"
             }
 
             override fun fail(value: String?) {
-                text2.text = "失败：$value"
+                textView2.text = "失败：$value"
             }
         })
     }
@@ -122,11 +134,11 @@ class MainActivity : BaseActivity() {
         val url = "http://192.168.6.9:8888/crash/"
         YUrlAndroid.create().setSessionId(session).get(url, object : YUrlListener {
             override fun success(bytes: ByteArray?, value: String?) {
-                text2.text = "成功：$value"
+                textView2.text = "成功：$value"
             }
 
             override fun fail(value: String?) {
-                text2.text = "失败：$value"
+                textView2.text = "失败：$value"
             }
         })
     }
@@ -144,10 +156,10 @@ class MainActivity : BaseActivity() {
 
         YUrlAndroid.create().downloadFile(url, f, object : YUrlDownloadFileListener {
             override fun progress(downloadSize: Int, fileSize: Int) {
-                text1.text = "$downloadSize/$fileSize"
+                textView1.text = "$downloadSize/$fileSize"
                 var progress = 100.0 * downloadSize / fileSize
                 progress = (progress * 100).toInt().toDouble() / 100
-                text2.text = "进度：$progress%"
+                textView2.text = "进度：$progress%"
             }
 
             override fun success(file: File) {}
