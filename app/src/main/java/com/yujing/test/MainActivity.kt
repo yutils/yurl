@@ -84,7 +84,7 @@ class MainActivity : YBaseActivity<ActivityAllTestBinding>(R.layout.activity_all
 
     private fun net2() {
         var url = "http://192.168.1.120:10007/api/SweepCode/JjdTwoDownload"
-//         url = "http://www.baidu.com"
+        // url = "http://www.baidu.com"
         var p =
             "{\"DeviceNo\":\"868403023178079\",\"BatchNum\":\"54511002\",\"Command\":112,\"MsgID\":1}"
         YUrlAndroid.create().post(url, p, object : YUrlListener {
